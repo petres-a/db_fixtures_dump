@@ -17,7 +17,7 @@ namespace :db do
         Pathname.new(s).basename.to_s.gsub(/\.rb$/,'').camelize
       end
       # specify FIXTURES_PATH to test/fixtures if you do test:unit
-      dump_dir = ENV['FIXTURES_PATH'] || "spec/fixtures/"
+      dump_dir = ENV['FIXTURES_PATH'] || "test/fixtures/"
       excludes = []
       excludes = ENV['EXCLUDE_MODELS'].split(' ') if ENV['EXCLUDE_MODELS']
       puts "Found models: " + models.join(', ')
@@ -31,13 +31,11 @@ namespace :db do
         next unless model.ancestors.include?(ActiveRecord::Base)
 
         entries = model.unscoped.all.order('id ASC')
-        puts "ANDREI Dumping model: #{m} (#{entries.length} entries)"
+        puts "Dumping model: #{m} (#{entries.length} entries)"
 
         increment = 1
 
         # use test/fixtures if you do test:unit
-        puts '***********************'
-        puts '***********Begin*******'
         model_file = File.join(Rails.root, dump_dir, m.underscore.pluralize + '.yml')
         output = {}
         entries.each do |a|
@@ -48,8 +46,6 @@ namespace :db do
 
           increment = increment + 1
         end
-        puts '***********End*********'
-        puts '***********************'
         file = File.open(model_file, 'w')
         file << output.to_yaml
         file.close #better than relying on gc
