@@ -31,7 +31,7 @@ namespace :db do
         next unless model.ancestors.include?(ActiveRecord::Base)
 
         entries = model.unscoped.all.order('id ASC')
-        puts "Dumping model: #{m} (#{entries.length} entries)"
+        puts "ANDREI Dumping model: #{m} (#{entries.length} entries)"
 
         increment = 1
 
