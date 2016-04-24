@@ -36,6 +36,8 @@ namespace :db do
         increment = 1
 
         # use test/fixtures if you do test:unit
+        puts '***********************'
+        puts '***********Begin*******'
         model_file = File.join(Rails.root, dump_dir, m.underscore.pluralize + '.yml')
         output = {}
         entries.each do |a|
@@ -44,8 +46,10 @@ namespace :db do
 
           output["#{m}_#{increment}"] = attrs
 
-          increment += 1
+          increment = increment + 1
         end
+        puts '***********End*********'
+        puts '***********************'
         file = File.open(model_file, 'w')
         file << output.to_yaml
         file.close #better than relying on gc
